@@ -32,5 +32,4 @@ export class MainComponent implements OnInit{
     console.log(data);
     this.selectedComponent = 'details';
   }
-
 }
