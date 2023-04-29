@@ -1,0 +1,28 @@
+<div style="margin-top: 100px">
+
+  <div class="container mt-4">
+    <h2>{{ user.firstname }} {{ user.lastname }}</h2>
+    <hr>
+    <div><p>Возраст: {{user.age}}</p></div>
+    <div><p>Имя пользователя: {{user.username}}</p></div>
+    <div><p>Адресс: {{user.address}}</p></div>
+    <div *ngIf="user.phoneNumber">
+      <p >Телефон: {{ user.phoneNumber }}</p>
+    </div>
+    <h3>Группы:</h3>
+    <table *ngIf="isLoad" class="table table-striped">
+      <thead>
+      <tr>
+        <th>Название группы</th>
+        <th>Предмет</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let group of groups" (click)="sendGroupUp(group)">
+        <td>{{ group.name }}</td>
+        <td>{{group.subject.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

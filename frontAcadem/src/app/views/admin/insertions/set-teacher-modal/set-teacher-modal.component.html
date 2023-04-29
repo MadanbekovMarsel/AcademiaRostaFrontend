@@ -1,0 +1,25 @@
+<div class="modal-container">
+  <h2 class="modal-title">Add new teacher</h2>
+  <form>
+    <mat-form-field>
+      <mat-select
+        placeholder="Teacher"
+        class="task1"
+        [(ngModel)]="selectedTeacher"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <mat-option *ngFor="let teacher of teachers" [value]="teacher">
+          {{ teacher.firstname }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      class="modal-button"
+      (click)="onSubmit(); closeDialog()"
+    >
+      Save
+    </button>
+  </form>
+</div>

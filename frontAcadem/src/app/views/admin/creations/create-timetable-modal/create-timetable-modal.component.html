@@ -1,0 +1,73 @@
+<div class="container">
+  <h1>Schedule</h1>
+  <form [formGroup]="timetableForm">
+    <div class="day-container">
+      <div class="day">Monday</div>
+      <mat-form-field>
+        <input matInput formControlName="mondayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="mondayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div class="day-container">
+      <div class="day">Tuesday</div>
+      <mat-form-field>
+        <input matInput formControlName="tuesdayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="tuesdayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div class="day-container">
+      <div class="day">Wednesday</div>
+      <mat-form-field >
+        <input matInput formControlName="wednesdayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="wednesdayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div class="day-container">
+      <div class="day">Thursday</div>
+      <mat-form-field >
+        <input matInput formControlName="thursdayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="thursdayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div class="day-container">
+      <div class="day">Friday</div>
+      <mat-form-field >
+        <input matInput formControlName="fridayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="fridayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div class="day-container">
+      <div class="day">Saturday</div>
+      <mat-form-field>
+        <input matInput formControlName="saturdayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="saturdayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div class="day-container">
+      <div class="day">Sunday</div>
+      <mat-form-field>
+        <input matInput formControlName="sundayHH" type="number" class="timepicker" placeholder="HH">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="sundayMM" type="number" class="timepicker" placeholder="mm">
+      </mat-form-field>
+    </div>
+    <div id = "controls" class="row">
+      <button style="width: 20%" [disabled]="timetableForm.invalid" (click)="save();closeDialog()" mat-flat-button color="primary">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,24 @@
+<div class="modal-container">
+  <h2 class="modal-title">Регистрация нового пользователя</h2>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Имя" name="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"
+      class="modal-input">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Subject" class="task1" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}">
+        <mat-option *ngFor="let subject of subjects" [value]="subject">
+          {{subject.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Teacher" class="task1" [(ngModel)]="selectedTeacher" [ngModelOptions]="{standalone: true}">
+        <mat-option *ngFor="let teacher of teachers" [value]="teacher">
+          {{teacher.firstname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" class="modal-button">Зарегистрироваться</button>
+  </form>
+</div>

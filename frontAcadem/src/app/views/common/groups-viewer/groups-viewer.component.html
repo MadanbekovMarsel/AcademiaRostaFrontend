@@ -1,0 +1,27 @@
+<div *ngIf="!isLoaded" style="margin-top: 80px; margin-left: 20px">
+  <div class="container">
+    <p class="text">Мои группы</p>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Assignee</mat-label>
+      <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      </mat-autocomplete>
+    </mat-form-field>
+    <button class="button" (click)="openGroupCreateModal()">create group</button>
+  </div>
+  <div class="row back">
+    <div class="col-md-4" *ngFor="let group of filteredOptions | async">
+      <div class="card">
+        <div class="header">
+          <h2 class="title" (click)="sendGroupUp(group)" >{{ group.name }}</h2>
+          <button class="delete-btn" (click)="onDelete(group)">Delete</button>
+        </div>
+        <div class="content" (click)="sendGroupUp(group)">
+          <div><strong>Преподаватель:</strong> {{ group.teacher?.firstname }}</div>
+          <div><strong>Количество студентов:</strong> {{ group.pupils?.length }}</div>
+          <div><strong>Длительность курса:</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

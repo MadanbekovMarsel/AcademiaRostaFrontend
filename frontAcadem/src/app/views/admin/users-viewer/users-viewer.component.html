@@ -1,0 +1,32 @@
+<div class="student-list">
+  <div class="container">
+    <h2>Список студентов</h2>
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Assignee</mat-label>
+        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <button class="button" (click)="createUser()">create user</button>
+  </div>
+  <table>
+    <thead>
+    <tr>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th>Возраст</th>
+      <th>Phone number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of filteredOptions | async">
+      <td (click)="onRowClick(user)">{{ user.firstname }}</td>
+      <td (click)="onRowClick(user)">{{ user.lastname }}</td>
+      <td>{{ user.age }}</td>
+      <td>{{user.phoneNumber}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

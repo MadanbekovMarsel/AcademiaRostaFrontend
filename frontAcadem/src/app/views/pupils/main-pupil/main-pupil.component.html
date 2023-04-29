@@ -1,0 +1,52 @@
+<mat-sidenav-container *ngIf="isLoaded" style="width: 100%; height: 100%">
+  <mat-sidenav class="position-fixed" mode="side" opened>
+    <mat-list style="margin-top: 60px">
+      <mat-chip-list>
+
+        <mat-list-item>
+          <div class="d-flex align-items-center">
+            <mat-chip (click)="main()">
+              <mat-icon class="example-icon" style="margin-right: 20px">group</mat-icon>
+              My groups
+            </mat-chip>
+          </div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <div class="d-flex align-items-center">
+            <mat-chip (click)="teachers()">
+              <mat-icon class="example-icon" style="margin-right: 20px">contact_mail</mat-icon>
+              Teachers
+            </mat-chip>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div class="d-flex align-items-center">
+            <mat-chip (click)="pupils()">
+              <mat-icon class="example-icon" style="margin-right: 20px">supervised_user_circle</mat-icon>
+              Pupils
+            </mat-chip>
+          </div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <div class="d-flex align-items-center">
+            <mat-chip (click)="trenajer()">
+              <mat-icon class="example-icon" style="margin-right: 22px">extension</mat-icon>
+              Trenajer
+            </mat-chip>
+          </div>
+        </mat-list-item>
+
+      </mat-chip-list>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div *ngIf="selectedComponent">
+      <app-groups-viewer *ngIf="selectedComponent == 'main'" (selectedGroup)="handleGroupEvent($event)"></app-groups-viewer>
+      <app-group-details *ngIf="selectedComponent == 'groupDetails'" [group]="selectedGroup" [role]="role" (uploadUser)="handleUserEvent($event)"></app-group-details>
+      <app-userdetails *ngIf="selectedComponent == 'userDetails'" [user]="uploadUser" (selectedGroup)="handleGroupEvent($event)"></app-userdetails>
+      <app-users-viewer *ngIf="selectedComponent == 'users'" [role]="userViewerRole" (uploadUser)="handleTeacherEvent($event)"></app-users-viewer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
