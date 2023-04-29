@@ -1,0 +1,173 @@
+<mat-sidenav-container style="width: 100%; height: 100%">
+  <mat-sidenav class="position-fixed" mode="side" opened>
+    <mat-list style="margin-top: 60px; margin-left: 20px">
+      <mat-chip-list>
+
+        <div class="d-flex align-items-center">
+          <mat-chip>
+            <mat-icon class="example-icon" style="margin-right: 20px">timer</mat-icon>
+            Speed
+          </mat-chip>
+          <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" step="0.2" max="23" min="0.2"
+                 [(ngModel)]="inter">
+        </div>
+        <div class="d-flex align-items-center">
+          <mat-chip>
+            <mat-icon class="example-icon" style="margin-right: 22px">123</mat-icon>
+            Digits
+          </mat-chip>
+          <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" max="20" min="1" [(ngModel)]="digits" (input)="digitsChange()">
+        </div>
+
+        <div class="d-flex align-items-center">
+          <mat-chip>
+            <mat-icon class="example-icon" style="margin-right: 21px">checklist</mat-icon>
+            Count
+          </mat-chip>
+          <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" max="100" min="3" [(ngModel)]="count">
+        </div>
+      </mat-chip-list>
+
+      <div>
+        <mat-form-field class="task" appearance="fill">
+          <mat-label>Помощь брата</mat-label>
+          <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" class="task1" [(ngModel)]="pbSelectedTask" (selectionChange)="pbSelected()">
+            <mat-option *ngFor="let task of pbSelectInfo" [value]="task.name">
+              {{task.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="task" appearance="fill">
+          <mat-label>Помощь друга</mat-label>
+          <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="pdSelectedTask" (selectionChange)="pdSelected()">
+            <mat-option *ngFor="let task of pdSelectInfo" [value]="task.name">
+              {{task.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div [hidden]="isPupil">
+        <mat-form-field class="task" appearance="fill">
+          <mat-label>Количество участников</mat-label>
+          <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="countOfPupils" (selectionChange)="countOfPupilChange()">
+            <mat-option *ngFor="let i of countFrames" [value]="i">
+              {{i}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div [hidden]="isPupil">
+        <mat-form-field class="task" appearance="fill">
+          <mat-label>Группа</mat-label>
+          <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="selectedGroup" (selectionChange)="onGroupChange()">
+            <mat-option [value]="defaultGroup">No</mat-option>
+            <mat-option *ngFor="let group of groups" [value]="group">
+              {{group.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="tools">
+      <div class="container text-center">
+        <div class="row">
+          <div  style="justify-content: center;">
+            <div class="form-check form-switch floating-button1">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" [disabled]="countOfPupils !=1 " [checked]="voice" [(ngModel)]="voice">
+              <label class="form-check-label" for="flexSwitchCheckDefault">Voice</label>
+            </div>
+            <button class="btn btn-warning btn-lg" (click)="break()" [hidden]="startButtonEnable || showAnswerEnable">Break</button>
+            <button class="btn btn-primary btn-lg" (click)="start()" [hidden]="!startButtonEnable" style="margin-top: 10px">Start
+            </button>
+            <button class="btn btn-primary btn-lg" (click)="answer()" [hidden]="!showAnswerEnable" style="margin-top: 10px">Answer
+            </button>
+          </div>
+          <div [hidden]="isPupil" style="justify-content: center;margin-top: 10px">
+            <button class="btn btn-primary floating-button" (click)="save()" [hidden]="!startButtonEnable">Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="content-container d-flex flex-wrap justify-content-center">
+      <div class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'" *ngIf="countOfPupils > 0">
+        <div class="buttons" [hidden]="isPupil">
+          <select class="row form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="firstFramePupil" (change)="pupilChanged(1)">
+            <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
+          </select>
+          <button class="btn btn-danger" [hidden]="!firstFrameCheckers" (click)="incorrect(1)">
+            <mat-icon class="fas fa-user">clear</mat-icon>
+          </button>
+          <button class="btn btn-success" [hidden]="!firstFrameCheckers" (click)="correct(1)" style="margin-top: 10px">
+            <mat-icon class="fas fa-user">done</mat-icon>
+          </button>
+        </div>
+        <div class="text">
+          <div [style.font-size]="fontSize + 'rem'">
+            <span>{{firstFrameNum}}</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div [hidden]="isPupil" class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'" *ngIf="countOfPupils > 1">
+        <div class="buttons">
+          <select class="row form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="secondFramePupil" (change)="pupilChanged(2)">
+            <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
+          </select>
+          <button class="btn btn-danger" [hidden]="!secondFrameCheckers" (click)="incorrect(2)">
+            <mat-icon class="fas fa-user">clear</mat-icon>
+          </button>
+          <button class="btn btn-success" [hidden]="!secondFrameCheckers" (click)="correct(2)" style="margin-top: 10px">
+            <mat-icon class="fas fa-user">done</mat-icon>
+          </button>
+        </div>
+        <div class="text" [style.font-size]="fontSize + 'rem'">
+            <span>{{secondFrameNum}}</span>
+        </div>
+      </div>
+      <div [hidden]="isPupil" class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'" *ngIf="countOfPupils > 2">
+        <div class="buttons">
+          <select class="row form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="thirdFramePupil" (change)="pupilChanged(3)">
+            <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
+          </select>
+          <button class="btn btn-danger" [hidden]="!thirdFrameCheckers" (click)="incorrect(3)">
+            <mat-icon class="fas fa-user">clear</mat-icon>
+          </button>
+          <button class="btn btn-success" [hidden]="!thirdFrameCheckers" (click)="correct(3)" style="margin-top: 10px">
+            <mat-icon class="fas fa-user">done</mat-icon>
+          </button>
+        </div>
+        <div class="text" [style.font-size]="fontSize + 'rem'">
+            <span>{{thirdFrameNum}}</span>
+        </div>
+      </div>
+      <div [hidden]="isPupil" class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'" *ngIf="countOfPupils > 3">
+        <div class="buttons">
+          <select class="row form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="fourthFramePupil" (change)="pupilChanged(4)">
+            <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
+          </select>
+          <button class="btn btn-danger" [hidden]="!fourthFrameCheckers" (click)="incorrect(4)">
+            <mat-icon class="fas fa-user">clear</mat-icon>
+          </button>
+          <button class="btn btn-success" [hidden]="!fourthFrameCheckers" (click)="correct(4)" style="margin-top: 10px">
+            <mat-icon class="fas fa-user">done</mat-icon>
+          </button>
+        </div>
+        <div class="text" [style.font-size]="fontSize + 'rem'">
+            <span>{{fourthFrameNum}}</span>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

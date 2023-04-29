@@ -1,0 +1,66 @@
+mat-sidenav {
+  width: 250px;
+}
+.task{
+  width: 80%;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.floating-button{
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+.floating-button1{
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tools{
+  position: fixed;
+  width: calc(100% - 250px);
+  vertical-align: center;
+  bottom: 20px;
+}
+.toolbar-container {
+  position: fixed;
+  bottom: 0;
+  height: 90px;
+  width: calc(100% - 250px);
+}
+
+.content-container {
+  width: 100%;
+  height: calc(100% - 90px); /* 50px - высота toolbar'а */
+  margin-top: 40px; /* 50px - высота toolbar'а */
+}
+
+.container1 {
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 90px);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 60px;
+  margin-right: 20px;
+}
+.text{
+  flex-grow: 1;
+  text-align: center;
+  font-size: 10rem;
+}
+
+.inputs{
+  width: 60px;
+}
