@@ -4,7 +4,7 @@ import {AuthService} from "../../service/auth.service";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {NotificationsService} from "../../service/notifications.service";
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
-import {TranslationService} from "../../service/translation.service";
+import {TranslationService} from "../../service/ translations/translation.service";
 
 @Component({
   selector: 'app-login',
@@ -15,11 +15,13 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   lang = 'ru';
   showProgressBar: boolean = false;
+  hide = true;
 
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private notificationService: NotificationsService,
+    private translationService: TranslationService,
     private router: Router,
     private fb: FormBuilder,
     private translations: TranslationService) {
@@ -82,6 +84,9 @@ export class LoginComponent implements OnInit {
       console.log(error);
       this.notificationService.showSnackBar(error.message);
     });
+  }
+  translate(key: string): string {
+    return this.translationService.translate(key, 'ru');
   }
 
   get login():string{

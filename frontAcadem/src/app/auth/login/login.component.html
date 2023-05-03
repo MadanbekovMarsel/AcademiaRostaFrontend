@@ -1,33 +1,69 @@
-<div class="login-page">
-  <h2>{{login}}</h2>
-  <form [formGroup]="loginForm">
-    <div>
-      <div class="justify-content-center">
-        <mat-form-field appearance="outline">
-          <mat-label>{{username}}</mat-label>
-          <input matInput formControlName="username">
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>{{password}}</mat-label>
-          <input matInput formControlName="password" type="password">
-        </mat-form-field>
-      </div>
-      <div id = "controls" class="row">
-        <button style="width: 20%" [disabled]="loginForm.invalid" (click)="submit()" mat-flat-button color="primary">
-          {{login}}
-        </button>
-      </div>
+<!--Hey! This is the original version
+of Simple CSS Waves-->
+
+<div class="header">
+
+  <!--Content before waves-->
+  <div class="inner-header flex">
+    <div class="login-page">
+      <h2>{{ 'Login' || translate }}</h2>
+      <form [formGroup]="loginForm">
+        <div>
+          <div class="justify-content-center">
+            <mat-form-field appearance="outline">
+              <mat-label>{{username}}</mat-label>
+              <input matInput formControlName="username">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your password</mat-label>
+              <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <!--        <mat-form-field appearance="outline">-->
+            <!--          <mat-label>{{password}}</mat-label>-->
+            <!--          <input matInput formControlName="password" type="password">-->
+            <!--        </mat-form-field>-->
+          </div>
+          <div id = "controls" class="row">
+            <button style="width: 20%" [disabled]="loginForm.invalid" (click)="submit()" mat-flat-button color="primary">
+              {{login}}
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-  </form>
+    <div *ngIf="showProgressBar" class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+  <!--Waves Container-->
+  <div>
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+         viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+      <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+      </defs>
+      <g class="parallax">
+        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <!--Waves end-->
+
 </div>
-<div *ngIf="showProgressBar" class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<!--Header ends-->
+
+<!--Content starts-->
+<div class="content flex">
+  <p>Academia rosta</p>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<!--Content ends-->

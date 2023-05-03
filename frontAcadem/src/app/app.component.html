@@ -1,27 +1,23 @@
-<mat-toolbar color="primary" class="fixed-top" >
-  <img src="../assets/logo_light.png" routerLink="/main" style="width: 140px">
+<!--<mat-toolbar color="primary" class="fixed-top" >-->
+<!--  <img src="../assets/logo_light.png" routerLink="/main" style="width: 140px">-->
 
-<!--  <span class="spacer"></span>-->
+<!--  <span class="spacer"> </span>-->
 
-  <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button class="example-icon favourite-icon">
-    <mat-icon>login</mat-icon>
-  </button>
+<!--&lt;!&ndash;  <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button class="example-icon favourite-icon">&ndash;&gt;-->
+<!--&lt;!&ndash;    <mat-icon>login</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;  </button>&ndash;&gt;-->
 
-  <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button>
-    <mat-icon color="accent">account_box</mat-icon>
-  </button>
+<!--  <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button>-->
+<!--    <mat-icon>account_box</mat-icon>-->
+<!--  </button>-->
 
-  <mat-menu id="menu-item" #menu="matMenu">
-    <button mat-menu-item routerLink="/profile">Profile</button>
-    <button (click)="logout()" mat-menu-item>Logout</button>
-  </mat-menu>
-</mat-toolbar>
-<div *ngIf="showProgressBar" class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-<!--<app-create-timetable-modal></app-create-timetable-modal>-->
+<!--  <mat-menu id="menu-item" #menu="matMenu">-->
+<!--    <button mat-menu-item routerLink="/profile">Profile</button>-->
+<!--    <button (click)="logout()" mat-menu-item>Logout</button>-->
+<!--  </mat-menu>-->
+<!--</mat-toolbar>-->
+
 <router-outlet></router-outlet>
-<!--<app-new-view></app-new-view>-->
 <!--<app-old-view></app-old-view>-->
-<!--<app-create-user></app-create-user>-->
-<!--<mySpeech></mySpeech>&lt;!&ndash;&ndash;&gt;-->
+<!--<app-error-page></app-error-page>-->
+<!--<app-olimp></app-olimp>-->

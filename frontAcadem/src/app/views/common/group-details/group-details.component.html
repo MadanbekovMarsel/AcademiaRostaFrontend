@@ -1,4 +1,4 @@
-<div style="padding: 20px">
+<div *ngIf="isLoaded" style="padding: 20px">
   <header style="margin-top: 90px">
     <h1>{{group.name}}</h1>
     <p>Описание группы</p>
@@ -7,9 +7,10 @@
     <p>Pupils: {{count}} </p>
     <button [hidden]="role!=='ROLE_ADMIN'" class="add-student-button" (click)="setTeacher()">Change Teacher</button>
   </header>
+
   <section class="students">
-    <h2>Список учеников</h2>
-    <table>
+<!--    <h2>Список учеников</h2>-->
+    <table class="fl-table">
       <thead>
       <tr>
         <th>Имя</th>

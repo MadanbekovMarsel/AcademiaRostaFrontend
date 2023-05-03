@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {interval, Observable, Subscription} from "rxjs";
+import {interval, Subscription} from "rxjs";
 import {TrenajerService} from "../../../../service/trenajer.service";
 import {TextToSpeechService} from "../../../../service/text-to-speech.service";
 import {User} from "../../../../models/User";
 import {UserService} from "../../../../service/user.service";
 import {MarkService} from "../../../../service/mark.service";
 import {Mark} from "../../../../models/Mark";
-import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
 import {Group} from "../../../../models/Group";
 import {GroupService} from "../../../../service/group.service";
 
@@ -67,7 +66,7 @@ export class TrenLayoutComponent implements OnInit {
   countOfPupils = 1;
   countFrames = [1, 2, 3, 4];
   countedWidth = 100;
-  countedHeight = 100;
+  countedHeight = 95;
 
   firstFramePupil!: User;
   preFirstPupil!: User;
@@ -118,13 +117,16 @@ export class TrenLayoutComponent implements OnInit {
     })
   }
 
-
-  resetAll(): void {
-    this.viewReset();
+  resetMarks():void{
     this.firstPupilsMark = this.defaultMark();
     this.secondPupilsMark = this.defaultMark();
     this.thirdPupilsMark = this.defaultMark();
     this.fourthPupilsMark = this.defaultMark();
+  }
+
+  resetAll(): void {
+    this.viewReset();
+    this.resetMarks();
 
     this.firstFramePupil = this.defaultUser();
     this.preFirstPupil = this.defaultUser();
@@ -154,6 +156,7 @@ export class TrenLayoutComponent implements OnInit {
     return {
       correctAnswers: 0,
       totalQuestions: 0,
+      topic: this.selectedTaskName(),
       date: new Date(),
     }
   }
@@ -182,10 +185,14 @@ export class TrenLayoutComponent implements OnInit {
 
   pbSelected() {
     this.pdSelectedTask = null;
+    this.save();
+    this.resetMarks();
   }
 
   pdSelected() {
     this.pbSelectedTask = null;
+    this.save();
+    this.resetMarks();
   }
 
   async getTasks(): Promise<any> {
@@ -193,8 +200,6 @@ export class TrenLayoutComponent implements OnInit {
     if (this.countOfPupils > 1) this.secondFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
     if (this.countOfPupils > 2) this.thirdFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
     if (this.countOfPupils > 3) this.fourthFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
-
-
   }
 
   selectedTaskName(): string {
@@ -208,47 +213,54 @@ export class TrenLayoutComponent implements OnInit {
   }
 
   start(): void {
-    this.source = interval(this.inter * 1000);
-    this.getTasks();
+    try {
+      this.source = interval(this.inter * 1000);
+      this.getTasks();
 
-    console.log(this.firstFrameArray);
-    console.log(this.secondFrameArray);
-
-    this.firstFrameCheckers = false;
-    this.secondFrameCheckers = false;
-    this.thirdFrameCheckers = false;
-    this.fourthFrameCheckers = false;
-
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
-    let i = 0;
-
-    this.subscription = this.source.subscribe(() => {
-      if (i < this.count) {
-        this.firstFrameNum = this.firstFrameArray[i];
-        console.log(this.voice);
-        if (this.voice) this.speechService.speakNumber(this.firstFrameNum);
-        if (this.countOfPupils > 1) this.secondFrameNum = this.secondFrameArray[i];
-        if (this.countOfPupils > 2) this.thirdFrameNum = this.thirdFrameArray[i];
-        if (this.countOfPupils > 3) this.fourthFrameNum = this.fourthFrameArray[i];
-        this.startButtonEnable = false;
-      }
-      if (i == this.count + 1) {
-        this.firstFrameNum = '=?';
-        this.secondFrameNum = '=?';
-        this.thirdFrameNum = '=?';
-        this.fourthFrameNum = '=?';
-
-        this.subscription.unsubscribe();
-        this.showAnswerEnable = true;
-        this.startButtonEnable = false;
-      }
       console.log(this.firstFrameArray);
-      i += 1;
-      console.log(i);
-    });
+      console.log(this.secondFrameArray);
+
+      this.firstFrameCheckers = false;
+      this.secondFrameCheckers = false;
+      this.thirdFrameCheckers = false;
+      this.fourthFrameCheckers = false;
+
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
+
+      let i = 0;
+
+      this.subscription = this.source.subscribe(() => {
+        if (i < this.count) {
+          this.firstFrameNum = this.firstFrameArray[i];
+          console.log(this.voice);
+          if (this.voice) this.speechService.speakNumber(this.firstFrameNum);
+          if (this.countOfPupils > 1) this.secondFrameNum = this.secondFrameArray[i];
+          if (this.countOfPupils > 2) this.thirdFrameNum = this.thirdFrameArray[i];
+          if (this.countOfPupils > 3) this.fourthFrameNum = this.fourthFrameArray[i];
+          this.startButtonEnable = false;
+        }
+        if (i == this.count + 1) {
+          this.firstFrameNum = '=?';
+          this.secondFrameNum = '=?';
+          this.thirdFrameNum = '=?';
+          this.fourthFrameNum = '=?';
+
+          this.subscription.unsubscribe();
+          this.showAnswerEnable = true;
+          this.startButtonEnable = false;
+        }
+        console.log(this.firstFrameArray);
+        i += 1;
+        console.log(i);
+      });
+    }catch (error){
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
+      this.resetAll();
+    }
   }
 
 
@@ -383,13 +395,14 @@ export class TrenLayoutComponent implements OnInit {
   countOfPupilChange() {
     this.voice = this.countOfPupils === 1;
     if (this.countOfPupils < 3) {
-      this.countedWidth = (this.countOfPupils === 2) ? 50 : 100;
-      this.countedHeight = 100;
-      this.fontSize = 15 / this.digits;
+      this.countedWidth = (this.countOfPupils === 2) ? 45 : 100;
+      this.countedHeight = 90;
+      this.fontSize = 13 - this.digits * 1.5;
     } else {
-      this.countedHeight = 50;
-      this.countedWidth = 50;
-      this.fontSize = 13 / this.digits;
+      this.countedHeight = 45;
+      this.countedWidth = 45;
+      if(this.digits)
+      this.fontSize = 13 - this.digits * 2;
     }
     this.resetAll();
   }
@@ -401,7 +414,7 @@ export class TrenLayoutComponent implements OnInit {
 
   digitsChange() {
     if (this.countOfPupils > 1) {
-      this.fontSize = 15 / this.digits + 2;
+      this.fontSize = 13 / this.digits + 2;
     }
   }
 

@@ -11,6 +11,7 @@ import {
 import {FormControl} from "@angular/forms";
 import {User} from "../../../models/User";
 import {map, Observable, startWith} from "rxjs";
+import {TranslationPipePipe} from "../../../service/ translations/translation-pipe.pipe";
 
 @Component({
   selector: 'app-groups-viewer',
@@ -19,6 +20,7 @@ import {map, Observable, startWith} from "rxjs";
 })
 export class GroupsViewerComponent implements OnInit, OnChanges{
   groups!: Group[];
+  @Input() lang!: string;
   @Output() selectedGroup = new EventEmitter<any>();
   isLoaded: boolean = false;
 
@@ -27,7 +29,14 @@ export class GroupsViewerComponent implements OnInit, OnChanges{
 
   constructor(private dialog: MatDialog,
               private groupService: GroupService,
-              private userService: UserService) {
+              private userService: UserService,
+              private translationPipe: TranslationPipePipe) {
+  }
+  translate(key: string, lang: string): string {
+    return this.translationPipe.transform(key, lang);
+  }
+  onLanguageChanged(lang: string) {
+    this.lang = lang;
   }
   sendGroupUp(group: Group){
     this.selectedGroup.emit(group);

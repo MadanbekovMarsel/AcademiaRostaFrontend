@@ -1,27 +1,32 @@
 <div *ngIf="!isLoaded" style="margin-top: 80px; margin-left: 20px">
   <div class="container">
-    <p class="text">Мои группы</p>
+    <p class="text">{{'MY GROUPS'| translationPipe:lang}}</p>
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Assignee</mat-label>
+      <mat-label>{{'SEARCH'| translationPipe:lang}}</mat-label>
       <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       </mat-autocomplete>
     </mat-form-field>
-    <button class="button" (click)="openGroupCreateModal()">create group</button>
+    <button class="button" (click)="openGroupCreateModal()">{{'CREATE GROUP'|translationPipe:lang}}</button>
   </div>
   <div class="row back">
-    <div class="col-md-4" *ngFor="let group of filteredOptions | async">
-      <div class="card">
-        <div class="header">
-          <h2 class="title" (click)="sendGroupUp(group)" >{{ group.name }}</h2>
-          <button class="delete-btn" (click)="onDelete(group)">Delete</button>
-        </div>
-        <div class="content" (click)="sendGroupUp(group)">
-          <div><strong>Преподаватель:</strong> {{ group.teacher?.firstname }}</div>
-          <div><strong>Количество студентов:</strong> {{ group.pupils?.length }}</div>
-          <div><strong>Длительность курса:</strong></div>
-        </div>
+    <div class="card card-{{i+1}}" *ngFor="let group of filteredOptions | async; let i = index"
+         (click)="sendGroupUp(group)">
+      <div style="display: flex;align-items: center;height: 60px">
+        <div class="card__icon"><i class="fas fa-bolt">
+          <mat-icon>group</mat-icon>
+        </i></div>
+        <h2 style="margin:0;display: flex;justify-content: center;align-items: center;" class="card__title" (click)="sendGroupUp(group)">{{ group.name }}</h2>
       </div>
+
+      <p class="card__apply">
+        <a class="card__link" href="#">{{"TEACHER"|translationPipe:lang}}: {{ group.teacher?.firstname }} {{group.teacher?.lastname?.charAt(0)}}.<i
+          class="fas fa-arrow-right"></i></a>
+      </p>
+      <p class="card__apply">
+        <a class="card__link" href="#">{{"COUNT OF PUPILS"|translationPipe:lang}}: {{ group.pupils?.length }}<i
+          class="fas fa-arrow-right"></i></a>
+      </p>
     </div>
   </div>
 </div>
