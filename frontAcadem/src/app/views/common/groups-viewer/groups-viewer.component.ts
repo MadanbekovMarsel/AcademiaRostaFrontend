@@ -11,7 +11,7 @@ import {
 import {FormControl} from "@angular/forms";
 import {User} from "../../../models/User";
 import {map, Observable, startWith} from "rxjs";
-import {TranslationPipePipe} from "../../../service/ translations/translation-pipe.pipe";
+import {TranslationPipe} from "../../../service/ translations/translation.pipe";
 
 @Component({
   selector: 'app-groups-viewer',
@@ -28,9 +28,10 @@ export class GroupsViewerComponent implements OnInit, OnChanges{
   filteredOptions!: Observable<Group[]>;
 
   constructor(private dialog: MatDialog,
+
               private groupService: GroupService,
               private userService: UserService,
-              private translationPipe: TranslationPipePipe) {
+              private translationPipe: TranslationPipe) {
   }
   translate(key: string, lang: string): string {
     return this.translationPipe.transform(key, lang);

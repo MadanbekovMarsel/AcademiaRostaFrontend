@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {interval, Subscription} from "rxjs";
 import {TrenajerService} from "../../../../service/trenajer.service";
 import {TextToSpeechService} from "../../../../service/text-to-speech.service";
@@ -8,6 +8,9 @@ import {MarkService} from "../../../../service/mark.service";
 import {Mark} from "../../../../models/Mark";
 import {Group} from "../../../../models/Group";
 import {GroupService} from "../../../../service/group.service";
+import {TranslationPipe} from "../../../../service/ translations/translation.pipe";
+import {TokenStorageService} from "../../../../service/token-storage.service";
+import {Router} from "@angular/router";
 
 export interface Task {
   name: string;
@@ -50,6 +53,8 @@ const pomoshDruga: Task[] = [
   styleUrls: ['./tren-layout.component.css']
 })
 export class TrenLayoutComponent implements OnInit {
+  lang = 'kg';
+
   groups!: Group[];
   selectedGroup!: Group;
   pupils!: User[];
@@ -106,17 +111,34 @@ export class TrenLayoutComponent implements OnInit {
 
   isPupil = false;
   defaultGroup = null;
+  opened = false;
 
   constructor(private trenajer: TrenajerService,
+              private tokenService: TokenStorageService,
+              private route: Router,
               private speechService: TextToSpeechService,
               private userService: UserService,
               private markService: MarkService,
-              private groupService: GroupService) {
+              private groupService: GroupService,
+              private translationPipe: TranslationPipe) {
     this.groupService.getCurrentUsersGroups().subscribe(data =>{
       this.groups = data;
     })
   }
+  changeLanguage(lang: string) {
+    this.lang = lang;
+  }
+  translate(key: string, lang: string): string {
+    return this.translationPipe.transform(key, lang);
+  }
+  onLanguageChanged(lang: string) {
+    this.lang = lang;
+  }
 
+  changeStatus():boolean{
+    this.opened = !this.opened;
+    return this.opened;
+  }
   resetMarks():void{
     this.firstPupilsMark = this.defaultMark();
     this.secondPupilsMark = this.defaultMark();
@@ -402,7 +424,7 @@ export class TrenLayoutComponent implements OnInit {
       this.countedHeight = 45;
       this.countedWidth = 45;
       if(this.digits)
-      this.fontSize = 13 - this.digits * 2;
+        this.fontSize = 13 - this.digits * 2;
     }
     this.resetAll();
   }
@@ -451,5 +473,18 @@ export class TrenLayoutComponent implements OnInit {
         this.pupils = data;
       });
     }
+  }
+
+  logout() {
+    this.tokenService.logOut();
+    this.route.navigate(['/login'])
+  }
+
+  profile() {
+
+  }
+
+  main() {
+    this.route.navigate(['/main']);
   }
 }

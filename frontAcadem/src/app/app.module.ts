@@ -33,7 +33,7 @@ import {MatLegacySlideToggleModule} from "@angular/material/legacy-slide-toggle"
 import {OlimpComponent} from './views/common/trenajer/olimp/olimp.component';
 import {MatSortModule} from "@angular/material/sort";
 import {OldViewComponent} from "./view/old-view/old-view.component";
-import {TranslationPipePipe} from './service/ translations/translation-pipe.pipe';
+import {TranslationPipe} from './service/ translations/translation.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,7 @@ import {TranslationPipePipe} from './service/ translations/translation-pipe.pipe
     CreateUserComponent,
     UsersViewerComponent,
     OlimpComponent,
-    TranslationPipePipe,
+    TranslationPipe,
   ],
     imports: [
         BrowserModule,
@@ -71,7 +71,7 @@ import {TranslationPipePipe} from './service/ translations/translation-pipe.pipe
         MatLegacySlideToggleModule,
         MatSortModule,
     ],
-  providers: [authInterceptorProviders, authErrorInterceptorProvider,TranslationPipePipe],
+  providers: [authInterceptorProviders, authErrorInterceptorProvider,TranslationPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule{}

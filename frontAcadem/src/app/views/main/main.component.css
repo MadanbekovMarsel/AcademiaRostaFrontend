@@ -95,3 +95,11 @@ body {
 .example-spacer {
   flex: 1 1 auto;
 }
+.side_content{
+  display: flex;
+  align-items: center;
+}
+.side_label{
+  width: 110px;
+  margin-left: 10px;
+}

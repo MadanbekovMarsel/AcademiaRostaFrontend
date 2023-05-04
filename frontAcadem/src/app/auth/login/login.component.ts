@@ -5,6 +5,7 @@ import {TokenStorageService} from "../../service/token-storage.service";
 import {NotificationsService} from "../../service/notifications.service";
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
 import {TranslationService} from "../../service/ translations/translation.service";
+import {TranslationPipe} from "../../service/ translations/translation.pipe";
 
 @Component({
   selector: 'app-login',
@@ -21,11 +22,16 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private notificationService: NotificationsService,
-    private translationService: TranslationService,
     private router: Router,
     private fb: FormBuilder,
-    private translations: TranslationService) {
+    private translationPipe: TranslationPipe) {
     this.loginForm = this.createLoginForm();
+  }
+  translate(key: string, lang: string): string {
+    return this.translationPipe.transform(key, lang);
+  }
+  onLanguageChanged(lang: string) {
+    this.lang = lang;
   }
 
   ngOnInit(): void {
@@ -61,43 +67,11 @@ export class LoginComponent implements OnInit {
       this.tokenStorage.saveUser(data);
 
       console.log(data.role);
-      switch (data.role) {
-        case 'ROLE_ADMIN':
-          console.log('there is admin');
-          this.router.navigate(['main']);
-          break;
-        case 'ROLE_TEACHER':
-          console.log('there is teacher');
-          this.router.navigate(['teacher']);
-          break;
-        case 'ROLE_PUPIL':
-          console.log('there is pupil');
-          this.router.navigate(['pupil']);
-          break;
-        default:
-          this.router.navigate(['main']);
-          break;
-      }
+      this.router.navigate(['main']);
       this.notificationService.showSnackBar('Successfully logged in');
-      // window.location.reload();
     }, error => {
       console.log(error);
       this.notificationService.showSnackBar(error.message);
     });
-  }
-  translate(key: string): string {
-    return this.translationService.translate(key, 'ru');
-  }
-
-  get login():string{
-    return this.translations.translate('Login',this.lang);
-  }
-
-  get username(): string{
-    return this.translations.translate('Username',this.lang);
-  }
-
-  get password(): string{
-    return this.translations.translate('Password',this.lang);
   }
 }

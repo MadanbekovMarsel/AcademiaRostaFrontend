@@ -1,32 +1,46 @@
 <div *ngIf="!isLoaded" style="margin-top: 80px; margin-left: 20px">
   <div class="container">
-    <p class="text">{{'MY GROUPS'| translationPipe:lang}}</p>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>{{'SEARCH'| translationPipe:lang}}</mat-label>
-      <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      </mat-autocomplete>
-    </mat-form-field>
-    <button class="button" (click)="openGroupCreateModal()">{{'CREATE GROUP'|translationPipe:lang}}</button>
+
+    <div>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>{{'SEARCH'| translationPipe:lang}}</mat-label>
+        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <h1 class="text">{{'MY_GROUPS'| translationPipe:lang}}</h1>
+    <button class="button" (click)="openGroupCreateModal()">{{'CREATE_GROUP'|translationPipe:lang}}</button>
   </div>
   <div class="row back">
-    <div class="card card-{{i+1}}" *ngFor="let group of filteredOptions | async; let i = index"
-         (click)="sendGroupUp(group)">
-      <div style="display: flex;align-items: center;height: 60px">
-        <div class="card__icon"><i class="fas fa-bolt">
-          <mat-icon>group</mat-icon>
-        </i></div>
-        <h2 style="margin:0;display: flex;justify-content: center;align-items: center;" class="card__title" (click)="sendGroupUp(group)">{{ group.name }}</h2>
+    <div class="card card-{{i+1}}" *ngFor="let group of filteredOptions | async; let i = index">
+      <div style="display: flex;align-items: center; justify-content: space-between; height: 60px">
+        <div style="display: flex;justify-content: center;align-items: center;" (click)="sendGroupUp(group)">
+          <div class="card__icon"><i class="fas fa-bolt">
+            <mat-icon>group</mat-icon>
+          </i></div>
+          <div class="group_name">
+            <h2 class="card__title"
+                (click)="sendGroupUp(group)">{{ group.name }}</h2>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-danger" style="right: 5px;padding: 5px"
+                  (click)="onDelete(group)">{{'DELETE'|translationPipe:lang}}</button>
+        </div>
       </div>
 
-      <p class="card__apply">
-        <a class="card__link" href="#">{{"TEACHER"|translationPipe:lang}}: {{ group.teacher?.firstname }} {{group.teacher?.lastname?.charAt(0)}}.<i
-          class="fas fa-arrow-right"></i></a>
-      </p>
-      <p class="card__apply">
-        <a class="card__link" href="#">{{"COUNT OF PUPILS"|translationPipe:lang}}: {{ group.pupils?.length }}<i
-          class="fas fa-arrow-right"></i></a>
-      </p>
+      <div style="margin-top: 50px">
+        <p>
+          <a class="card__link" href="#">{{"TEACHER"|translationPipe:lang}}
+            : {{ group.teacher?.firstname }} {{group.teacher?.lastname?.charAt(0)}}.<i
+              class="fas fa-arrow-right"></i></a>
+        </p>
+        <p>
+          <a class="card__link" href="#">{{"COUNT_OF_PUPILS"|translationPipe:lang}}: {{ group.pupils?.length }}<i
+            class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

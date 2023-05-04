@@ -16,6 +16,7 @@ import {
   CreateTimetableModalComponent
 } from "../../admin/creations/create-timetable-modal/create-timetable-modal.component";
 import {SetTeacherModalComponent} from "../../admin/insertions/set-teacher-modal/set-teacher-modal.component";
+import {TranslationPipe} from "../../../service/ translations/translation.pipe";
 
 
 @Component({
@@ -26,6 +27,7 @@ import {SetTeacherModalComponent} from "../../admin/insertions/set-teacher-modal
 export class GroupDetailsComponent implements OnInit, OnChanges {
   @Input() groupName!: string;
   @Input() role!: string;
+  @Input() lang!: string;
   group!: any;
   allpupils!: User[];
 
@@ -50,7 +52,14 @@ export class GroupDetailsComponent implements OnInit, OnChanges {
   constructor(private groupService: GroupService,
               private userService: UserService,
               private dialog: MatDialog,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private translationPipe: TranslationPipe) {
+  }
+  translate(key: string, lang: string): string {
+    return this.translationPipe.transform(key, lang);
+  }
+  onLanguageChanged(lang: string) {
+    this.lang = lang;
   }
 
   ngOnInit(): void {
@@ -79,19 +88,6 @@ export class GroupDetailsComponent implements OnInit, OnChanges {
         this.timetab = data;
         this.haveTimetable = true;
       }
-      // this.userService.getMembersOfGroup(this.group.id).subscribe(data=>{
-      //   this.group.pupils = data;
-      //   if(this.group.pupils){
-      //     this.count = this.group.pupils.length;
-      //   }else this.count = 0;
-      //   this.isLoaded = true;
-      // });
-      // this.userService.getAllPupils().subscribe(data =>{
-      //   this.allpupils = data;
-      // });
-      // this.groupService.getGroupByGroupName(this.group.name).subscribe(data =>{
-      //   this.group = data;
-      // })
       console.log(data);
     }, error => {
       console.log(error);
@@ -121,7 +117,10 @@ export class GroupDetailsComponent implements OnInit, OnChanges {
 
   timetableCreate() {
     const dialogRef = this.dialog.open(CreateTimetableModalComponent, {
-      data: this.group
+      data: {
+        group: this.group,
+        lang: this.lang
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog was closed:', result);

@@ -5,56 +5,67 @@
     </button>
     <span>Академия роста</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon favorite-icon"
+            aria-label="Example icon-button with heart icon">
       <mat-icon>language</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="changeLanguage('ru')">ru</button>
       <button mat-menu-item (click)="changeLanguage('kg')">kg</button>
     </mat-menu>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button mat-icon-button [matMenuTriggerFor]="menu1" class="example-icon"
+            aria-label="Example icon-button with share icon">
       <mat-icon>account_circle</mat-icon>
     </button>
+    <mat-menu #menu1="matMenu">
+      <button mat-menu-item (click)="logout()">logout</button>
+      <button mat-menu-item (click)="profile()">profile</button>
+    </mat-menu>
   </mat-toolbar>
 </p>
-<!--<mat-toolbar color="primary" class="fixed-top">-->
-<!--  <img src="../assets/logo_light.png" routerLink="/main" style="width: 140px">-->
-
-<!--  <span class="spacer"> </span>-->
-
-<!--  <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button-->
-<!--          class="example-icon favourite-icon">-->
-<!--    <mat-icon>login</mat-icon>-->
-<!--  </button>-->
-
-<!--  <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button>-->
-<!--    <mat-icon>account_box</mat-icon>-->
-<!--  </button>-->
-<!--  <mat-menu id="menu-item" #menu="matMenu">-->
-<!--    <button mat-menu-item routerLink="/profile">Profile</button>-->
-<!--    <button (click)="logout()" mat-menu-item>Logout</button>-->
-<!--  </mat-menu>-->
-<!--</mat-toolbar>-->
-
 <mat-sidenav-container *ngIf="isLoaded" style="width: 100%; height: 100%">
   <mat-sidenav class="position-fixed" mode="side" opened>
     <aside>
       <p> Menu </p>
       <a href="javascript:void(0)" class="menu-container" (click)="main()">
-        <mat-icon>group</mat-icon>
-        {{'MY GROUPS'|translationPipe:language}}
+        <div class="side_content">
+          <div>
+            <mat-icon>group</mat-icon>
+          </div>
+          <div class="side_label">
+            {{'MY_GROUPS'|translationPipe:language}}
+          </div>
+        </div>
       </a>
       <a href="javascript:void(0)" class="menu-container" (click)="teachers()">
-        <mat-icon class="example-icon">contact_mail</mat-icon>
-        {{'TEACHERS'|translationPipe:language}}
+        <div class="side_content">
+          <div>
+            <mat-icon class="example-icon">contact_mail</mat-icon>
+          </div>
+          <div class="side_label">
+            {{'TEACHERS'|translationPipe:language}}
+          </div>
+        </div>
       </a>
       <a href="javascript:void(0)" class="menu-container" (click)="pupils()">
-        <mat-icon class="example-icon">supervised_user_circle</mat-icon>
-        {{'PUPILS'|translationPipe:language}}
+        <div class="side_content">
+          <div>
+            <mat-icon class="example-icon">supervised_user_circle</mat-icon>
+          </div>
+          <div class="side_label">
+            {{'PUPILS'|translationPipe:language}}
+          </div>
+        </div>
       </a>
       <a href="javascript:void(0)" class="menu-container" (click)="trenajer()">
-        <mat-icon class="example-icon">extension</mat-icon>
-        {{'TRAINING'|translationPipe:language}}
+        <div class="side_content">
+          <div>
+            <mat-icon class="example-icon">extension</mat-icon>
+          </div>
+          <div class="side_label">
+            {{'TRAINING'|translationPipe:language}}
+          </div>
+        </div>
       </a>
     </aside>
   </mat-sidenav>
@@ -62,11 +73,12 @@
     <div *ngIf="selectedComponent">
       <app-groups-viewer *ngIf="selectedComponent == 'main'" [lang]="language"
                          (selectedGroup)="handleGroupEvent($event)"></app-groups-viewer>
-      <app-group-details *ngIf="selectedComponent == 'groupDetails'" [groupName]="selectedGroup.name" [role]="role"
+      <app-group-details *ngIf="selectedComponent == 'groupDetails'" [lang]="language" [groupName]="selectedGroup.name"
+                         [role]="role"
                          (uploadUser)="handleUserEvent($event)"></app-group-details>
-      <app-userdetails *ngIf="selectedComponent == 'userDetails'" [user]="uploadUser"
+      <app-userdetails *ngIf="selectedComponent == 'userDetails'" [lang]="language" [user]="uploadUser"
                        (selectedGroup)="handleGroupEvent($event)"></app-userdetails>
-      <app-users-viewer *ngIf="selectedComponent == 'users'" [role]="userViewerRole"
+      <app-users-viewer *ngIf="selectedComponent == 'users'" [lang]="language" [role]="userViewerRole"
                         (uploadUser)="handleTeacherEvent($event)"></app-users-viewer>
     </div>
   </mat-sidenav-content>

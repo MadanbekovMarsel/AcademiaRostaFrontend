@@ -88,4 +88,8 @@ export class MainComponent implements OnInit{
     this.uploadUser = user;
     this.selectedComponent = 'userDetails';
   }
+
+  profile() {
+
+  }
 }

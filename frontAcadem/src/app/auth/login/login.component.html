@@ -6,32 +6,27 @@ of Simple CSS Waves-->
   <!--Content before waves-->
   <div class="inner-header flex">
     <div class="login-page">
-      <h2>{{ 'Login' || translate }}</h2>
+      <h2>{{ 'LOGIN' | translationPipe:lang }}</h2>
       <form [formGroup]="loginForm">
         <div>
           <div class="justify-content-center">
             <mat-form-field appearance="outline">
-              <mat-label>{{username}}</mat-label>
+              <mat-label>{{ 'USERNAME' | translationPipe:lang }}</mat-label>
               <input matInput formControlName="username">
             </mat-form-field>
           </div>
           <div>
             <mat-form-field appearance="outline">
-              <mat-label>Enter your password</mat-label>
+              <mat-label>{{ 'ENTER_YOUR_PASSWORD' | translationPipe:lang }}</mat-label>
               <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
             </mat-form-field>
-
-            <!--        <mat-form-field appearance="outline">-->
-            <!--          <mat-label>{{password}}</mat-label>-->
-            <!--          <input matInput formControlName="password" type="password">-->
-            <!--        </mat-form-field>-->
           </div>
           <div id = "controls" class="row">
             <button style="width: 20%" [disabled]="loginForm.invalid" (click)="submit()" mat-flat-button color="primary">
-              {{login}}
+              {{ 'LOGIN' | translationPipe:lang }}
             </button>
           </div>
         </div>

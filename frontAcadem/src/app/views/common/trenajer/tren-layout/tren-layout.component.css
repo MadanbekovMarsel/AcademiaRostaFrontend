@@ -1,4 +1,4 @@
-mat-sidenav {
+mat-drawer {
   width: 250px;
 }
 .card {
@@ -24,7 +24,11 @@ mat-sidenav {
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
+.inputs{
+  width: 60px;
+  height: 30px;
+  /*margin-right: 10px;*/
+}
 .switch_box{
   display: -webkit-box;
   display: -ms-flexbox;
@@ -366,4 +370,35 @@ svg.checkbox .is_unchecked{
   text-align: center;
   font-size: 10rem;
 }
-
+.example-spacer {
+  flex: 1 1 auto;
+}
+.configs{
+  width: 200px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+mat-chip{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.configs_lab{
+  margin-bottom: 0;
+}
+mat-icon{
+  margin-left: 0;
+}
+.inner_config{
+  margin-left: 10px;
+  width: 190px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.marsForm{
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 5px;
+}

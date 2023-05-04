@@ -1,45 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import translations from '../../../assets/translations.json'
 
+interface Translations {
+  [lang: string]: {
+    [key: string]: string;
+  }
+}
 @Injectable({
   providedIn: 'root'
 })
-export class TranslationService {
-  private translations: {[lang: string]: {[key: string]: string}} = {
-    'ru': {
-      '':'',
-      'CREATE GROUP':'Создать группу',
-      'PUPIL':'Ученик',
-      'PUPILS':'Ученики',
-      'TRAINING':'Тренажер',
-      'TEACHER':'Учитель',
-      'TEACHERS':'Учителя',
-      'COUNT OF PUPILS':'Количество учеников',
-      'SEARCH':"Поиск",
-      'MY GROUPS':'Мои группы',
-      'LOGIN': 'Вход',
-      'USERNAME': 'Имя пользователя',
-      'PASSWORD': 'пароль',
-    },
-    'kg': {
-      '':'',
-      'CREATE GROUP':'Жаңы группа',
-      'PUPIL':'Окуучу',
-      'PUPILS':'Окуучулар',
-      'TRAINING':'Тренажер',
-      'TEACHER':'Мугалим',
-      'TEACHERS':'Мугалимдер',
-      'COUNT OF PUPILS':'Окуучулардын саны',
-      'SEARCH':"Издөө",
-      'MY GROUPS':'Менин группаларым',
-      'LOGIN': 'Кирүү',
-      'USERNAME': 'Колдонуучу',
-      'PASSWORD': 'Сыр сөз',
-    }
-  };
+export class TranslationService implements OnInit{
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
+
+  ngOnInit():void{
+  }
 
   translate(key: string, lang: string): string {
-    return this.translations[lang][key];
+    const translation: Translations = translations;
+    return translation[lang][key];
   }
 }

@@ -1,67 +1,79 @@
-<div style="height: 100%;width: 100%">
-  <mat-toolbar color="primary" class="fixed-top">
-    <img src="../assets/logo_light.png" routerLink="/main" style="width: 140px">
-
-    <span class="spacer"> </span>
-
-    <!--    <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button-->
-    <!--            class="example-icon favourite-icon">-->
-    <!--      <mat-icon>login</mat-icon>-->
-    <!--    </button>-->
-
-    <!--    <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button>-->
-    <!--      <mat-icon>account_box</mat-icon>-->
-    <!--    </button>-->
-
-    <button mat-button [matMenuTriggerFor]="menu">язык</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>ru</button>
-      <button mat-menu-item>ky</button>
-    </mat-menu>
-    <mat-menu id="menu-item" #menu="matMenu">
-      <button mat-menu-item routerLink="/profile">Profile</button>
-      <!--      <button (click)="logout()" mat-menu-item>Logout</button>-->
-    </mat-menu>
-  </mat-toolbar>
-
-
-  <mat-sidenav-container style="width: 100%; height: 100%">
-    <mat-sidenav class="position-fixed" mode="side" opened="true">
+<div style="height: 100%;width: 100%;">
+  <p class="fixed-top">
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+              (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span (click)="main()">Академия роста</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon favorite-icon"
+              aria-label="Example icon-button with heart icon">
+        <mat-icon>language</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changeLanguage('ru')">ru</button>
+        <button mat-menu-item (click)="changeLanguage('kg')">kg</button>
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="menu1" class="example-icon"
+              aria-label="Example icon-button with share icon">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item (click)="logout()">logout</button>
+        <button mat-menu-item (click)="profile()">profile</button>
+      </mat-menu>
+    </mat-toolbar>
+  </p>
+  <mat-drawer-container class="example-container" style="height: 100% ;width: 100%;overflow: hidden">
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
       <mat-list style="margin-top: 60px; margin-left: 20px">
-        <mat-chip-list>
+        <div style="overflow: hidden;">
 
-          <div class="d-flex align-items-center">
-            <mat-chip>
-              <mat-icon class="example-icon" style="margin-right: 20px">timer</mat-icon>
-              Speed
-            </mat-chip>
-            <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" step="0.2"
-                   max="23"
-                   min="0.2"
-                   [(ngModel)]="inter">
-          </div>
-          <div class="d-flex align-items-center">
-            <mat-chip>
-              <mat-icon class="example-icon" style="margin-right: 22px">123</mat-icon>
-              Digits
-            </mat-chip>
-            <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" max="20" min="1"
-                   [(ngModel)]="digits" (input)="digitsChange()">
+          <div class="configs">
+            <div>
+              <mat-icon class="example-icon">timer</mat-icon>
+            </div>
+            <div class="inner_config">
+              <p class="configs_lab">{{'SPEED'|translationPipe:lang}}</p>
+              <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" step="0.2"
+                     max="23"
+                     min="0.2"
+                     [(ngModel)]="inter">
+            </div>
           </div>
 
-          <div class="d-flex align-items-center">
-            <mat-chip>
-              <mat-icon class="example-icon" style="margin-right: 21px">checklist</mat-icon>
-              Count
-            </mat-chip>
-            <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" max="100" min="3"
-                   [(ngModel)]="count">
+          <div class="configs">
+            <div>
+              <mat-icon class="example-icon">123</mat-icon>
+            </div>
+            <div class="inner_config">
+              <p class="configs_lab">{{'DIGITS'|translationPipe:lang}}</p>
+              <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" max="20" min="1"
+                     [(ngModel)]="digits" (input)="digitsChange()">
+            </div>
           </div>
-        </mat-chip-list>
+
+          <div class="configs">
+            <div>
+              <mat-icon class="example-icon">checklist</mat-icon>
+            </div>
+            <div class="inner_config">
+              <div>
+                <p class="configs_lab">{{'COUNT'|translationPipe:lang}}</p>
+              </div>
+              <div>
+                <input [disabled]="!(startButtonEnable || showAnswerEnable)" class="inputs" type="number" max="100"
+                       min="3"
+                       [(ngModel)]="count">
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div>
           <mat-form-field class="task" appearance="fill">
-            <mat-label>Помощь брата</mat-label>
+            <mat-label>{{'BRO_HELP'|translationPipe:lang}}</mat-label>
             <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" class="task1" [(ngModel)]="pbSelectedTask"
                         (selectionChange)="pbSelected()">
               <mat-option *ngFor="let task of pbSelectInfo" [value]="task.name">
@@ -73,7 +85,7 @@
 
         <div>
           <mat-form-field class="task" appearance="fill">
-            <mat-label>Помощь друга</mat-label>
+            <mat-label>{{'FRIEND_HELP'|translationPipe:lang}}</mat-label>
             <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="pdSelectedTask"
                         (selectionChange)="pdSelected()">
               <mat-option *ngFor="let task of pdSelectInfo" [value]="task.name">
@@ -85,7 +97,7 @@
 
         <div [hidden]="isPupil">
           <mat-form-field class="task" appearance="fill">
-            <mat-label>Количество участников</mat-label>
+            <mat-label>{{'COUNT_OF_PUPILS'|translationPipe:lang}}</mat-label>
             <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="countOfPupils"
                         (selectionChange)="countOfPupilChange()">
               <mat-option *ngFor="let i of countFrames" [value]="i">
@@ -96,10 +108,10 @@
         </div>
         <div [hidden]="isPupil">
           <mat-form-field class="task" appearance="fill">
-            <mat-label>Группа</mat-label>
+            <mat-label>{{'GROUP'|translationPipe:lang}}</mat-label>
             <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="selectedGroup"
                         (selectionChange)="onGroupChange()">
-              <mat-option [value]="defaultGroup">No</mat-option>
+              <mat-option [value]="defaultGroup">{{'NO'|translationPipe:lang}}</mat-option>
               <mat-option *ngFor="let group of groups" [value]="group">
                 {{group.name}}
               </mat-option>
@@ -109,22 +121,24 @@
 
         <mat-divider></mat-divider>
       </mat-list>
-    </mat-sidenav>
-    <mat-sidenav-content style="background: #3fbafe;overflow: hidden;margin-top: 60px">
-      <div style="width: 100%;height: 100%">
+    </mat-drawer>
+
+    <div style="width: 100%;height: calc(100% - 60px);background: #3fbafe;overflow: hidden;margin-top: 60px">
+      <div style="width: 100%;height: calc(100% - 90px)">
         <!--      Content -->
-        <div style="width: 100%; height: calc(100% - 150px);flex-wrap: wrap;display: flex;justify-content: center">
+        <div style="width: 100%; height: 100%;flex-wrap: wrap;display: flex;justify-content: center">
           <div class="card" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'"
                *ngIf="countOfPupils > 0">
             <div class="d-flex align-items-center">
               <mat-chip>
                 <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
               </mat-chip>
-              <select class="row form-select form-select-sm" aria-label=".form-select-sm example"
-                      [(ngModel)]="firstFramePupil" (change)="pupilChanged(1)">
-                <option [ngValue]="defaultUser()">default</option>
-                <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
-              </select>
+              <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}"
+                          [(ngModel)]="firstFramePupil" (change)="pupilChanged(1)">
+                <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+                <mat-option *ngFor="let pupil of pupils"
+                            [value]="pupil">{{pupil.firstname}} {{pupil.lastname}}</mat-option>
+              </mat-select>
             </div>
             <div class="card__title"></div>
             <div style="display: flex;justify-content: center;align-items: center">
@@ -132,10 +146,10 @@
             </div>
             <div style="display: flex; justify-content: space-between;align-items: center;">
               <button [hidden]="!firstFrameCheckers" (click)="correct(1)" type="button" class="btn btn-success"
-                      style="width:20%;margin-left: 30px">Success
+                      style="width:20%;margin-left: 30px">{{'CORRECT'|translationPipe:lang}}
               </button>
               <button [hidden]="!firstFrameCheckers" (click)="incorrect(1)" type="button" class="btn btn-danger"
-                      style="width:20%; margin-right: 30px;">Danger
+                      style="width:20%; margin-right: 30px;">{{'INCORRECT'|translationPipe:lang}}
               </button>
             </div>
           </div>
@@ -146,11 +160,12 @@
               <mat-chip>
                 <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
               </mat-chip>
-              <select class="row form-select form-select-sm" aria-label=".form-select-sm example"
-                      [(ngModel)]="secondFramePupil" (change)="pupilChanged(2)">
-                <option [ngValue]="defaultUser()">default</option>
-                <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
-              </select>
+              <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}"
+                          [(ngModel)]="secondFramePupil" (change)="pupilChanged(2)">
+                <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+                <mat-option *ngFor="let pupil of pupils"
+                            [value]="pupil">{{pupil.firstname}} {{pupil.lastname}}</mat-option>
+              </mat-select>
             </div>
             <div class="card__title"></div>
             <div style="display: flex;justify-content: center;align-items: center">
@@ -158,10 +173,10 @@
             </div>
             <div style="display: flex; justify-content: space-between;align-items: center;">
               <button [hidden]="!secondFrameCheckers" (click)="correct(2)" type="button" class="btn btn-success"
-                      style="width:20%;margin-left: 30px">Success
+                      style="width:20%;margin-left: 30px">{{'CORRECT'|translationPipe:lang}}
               </button>
               <button [hidden]="!secondFrameCheckers" (click)="incorrect(2)" type="button" class="btn btn-danger"
-                      style="width:20%; margin-right: 30px;">Danger
+                      style="width:20%; margin-right: 30px;">{{'INCORRECT'|translationPipe:lang}}
               </button>
             </div>
           </div>
@@ -172,11 +187,12 @@
               <mat-chip>
                 <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
               </mat-chip>
-              <select class="row form-select form-select-sm" aria-label=".form-select-sm example"
-                      [(ngModel)]="thirdFramePupil" (change)="pupilChanged(3)">
-                <option [ngValue]="defaultUser()">default</option>
-                <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
-              </select>
+              <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}"
+                          [(ngModel)]="thirdFramePupil" (change)="pupilChanged(3)">
+                <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+                <mat-option *ngFor="let pupil of pupils"
+                            [value]="pupil">{{pupil.firstname}} {{pupil.lastname}}</mat-option>
+              </mat-select>
             </div>
             <div class="card__title"></div>
             <div style="display: flex;justify-content: center;align-items: center">
@@ -184,10 +200,10 @@
             </div>
             <div style="display: flex; justify-content: space-between;align-items: center;">
               <button [hidden]="!thirdFrameCheckers" (click)="correct(3)" type="button" class="btn btn-success"
-                      style="width:20%;margin-left: 30px">Success
+                      style="width:20%;margin-left: 30px">{{'CORRECT'|translationPipe:lang}}
               </button>
               <button [hidden]="!thirdFrameCheckers" (click)="incorrect(3)" type="button" class="btn btn-danger"
-                      style="width:20%; margin-right: 30px;">Danger
+                      style="width:20%; margin-right: 30px;">{{'INCORRECT'|translationPipe:lang}}
               </button>
             </div>
           </div>
@@ -198,11 +214,12 @@
               <mat-chip>
                 <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
               </mat-chip>
-              <select class="row form-select form-select-sm" aria-label=".form-select-sm example"
-                      [(ngModel)]="fourthFramePupil" (change)="pupilChanged(4)">
-                <option [ngValue]="defaultUser()">default</option>
-                <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>
-              </select>
+              <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}"
+                          [(ngModel)]="fourthFramePupil" (change)="pupilChanged(4)">
+                <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+                <mat-option *ngFor="let pupil of pupils"
+                            [value]="pupil">{{pupil.firstname}} {{pupil.lastname}}</mat-option>
+              </mat-select>
             </div>
             <div class="card__title"></div>
             <div style="display: flex;justify-content: center;align-items: center">
@@ -210,10 +227,10 @@
             </div>
             <div style="display: flex; justify-content: space-between;align-items: center;">
               <button [hidden]="!fourthFrameCheckers" (click)="correct(4)" type="button" class="btn btn-success"
-                      style="width:20%;margin-left: 30px">Success
+                      style="width:20%;margin-left: 30px">{{'CORRECT'|translationPipe:lang}}
               </button>
               <button [hidden]="!fourthFrameCheckers" (click)="incorrect(4)" type="button" class="btn btn-danger"
-                      style="width:20%; margin-right: 30px;">Danger
+                      style="width:20%; margin-right: 30px;">{{'INCORRECT'|translationPipe:lang}}
               </button>
             </div>
           </div>
@@ -236,133 +253,25 @@
                     fill-rule="evenodd" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <label>Voice</label>
+              <label>{{'VOICE'|translationPipe:lang}}</label>
             </div>
             <div style="display: flex;justify-content: center;align-items: center;width: 20%">
               <button class="btn btn-warning" style="width:100%" (click)="break()"
-                      [hidden]="startButtonEnable || showAnswerEnable">Break
+                      [hidden]="startButtonEnable || showAnswerEnable">{{'BREAK'|translationPipe:lang}}
               </button>
-              <button (click)="start()" [hidden]="!startButtonEnable" class="btn btn-success" style="width:100%">Start
+              <button (click)="start()" [hidden]="!startButtonEnable" class="btn btn-success"
+                      style="width:100%">{{'START'|translationPipe:lang}}
               </button>
               <button class="btn btn-primary" (click)="answer()" [hidden]="!showAnswerEnable" style="width:100%">
-                Answer
+                {{'ANSWER'|translationPipe:lang}}
               </button>
             </div>
             <button (click)="save()" [disabled]="!startButtonEnable" class="btn btn-light"
-                    style="width:20%;margin-right: 20px">Save
+                    style="width:20%;margin-right: 20px">{{'SAVE'|translationPipe:lang}}
             </button>
           </div>
         </div>
       </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-<div>
-
-  <!--  <div class="tools">-->
-  <!--    <div class="container text-center">-->
-  <!--      <div class="row">-->
-  <!--        <div style="justify-content: center;">-->
-  <!--          <div class="form-check form-switch floating-button1">-->
-  <!--            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"-->
-  <!--                   [disabled]="countOfPupils !=1 " [checked]="voice" [(ngModel)]="voice">-->
-  <!--            <label class="form-check-label" for="flexSwitchCheckDefault">Voice</label>-->
-  <!--          </div>-->
-  <!--          <button class="btn btn-warning btn-lg" (click)="break()" [hidden]="startButtonEnable || showAnswerEnable">-->
-  <!--            Break-->
-  <!--          </button>-->
-  <!--          <button class="btn btn-primary btn-lg" (click)="start()" [hidden]="!startButtonEnable"-->
-  <!--                  style="margin-top: 10px">Start-->
-  <!--          </button>-->
-  <!--          <button class="btn btn-primary btn-lg" (click)="answer()" [hidden]="!showAnswerEnable"-->
-  <!--                  style="margin-top: 10px">Answer-->
-  <!--          </button>-->
-  <!--        </div>-->
-  <!--        <div [hidden]="isPupil" style="justify-content: center;margin-top: 10px">-->
-  <!--          <button class="btn btn-primary floating-button" (click)="save()" [hidden]="!startButtonEnable">Save-->
-  <!--          </button>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
-
-  <!--  <div class="content-container d-flex flex-wrap justify-content-center">-->
-  <!--    <div class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'"-->
-  <!--         *ngIf="countOfPupils > 0">-->
-  <!--      <div class="buttons" [hidden]="isPupil">-->
-  <!--          <select class="row form-select form-select-sm" aria-label=".form-select-sm example"-->
-  <!--                  [(ngModel)]="firstFramePupil" (change)="pupilChanged(1)">-->
-  <!--            <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>-->
-  <!--          </select>-->
-  <!--        <button class="btn btn-danger" [hidden]="!firstFrameCheckers" (click)="incorrect(1)">-->
-  <!--          <mat-icon class="fas fa-user">clear</mat-icon>-->
-  <!--        </button>-->
-  <!--        <button class="btn btn-success" [hidden]="!firstFrameCheckers" (click)="correct(1)" style="margin-top: 10px">-->
-  <!--          <mat-icon class="fas fa-user">done</mat-icon>-->
-  <!--        </button>-->
-  <!--      </div>-->
-  <!--      <div class="text">-->
-  <!--        <div [style.font-size]="fontSize + 'rem'">-->
-  <!--          <span>{{firstFrameNum}}</span>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-
-
-  <!--    <div [hidden]="isPupil" class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'"-->
-  <!--         *ngIf="countOfPupils > 1">-->
-  <!--      <div class="buttons">-->
-  <!--        <select class="row form-select form-select-sm" aria-label=".form-select-sm example"-->
-  <!--                [(ngModel)]="secondFramePupil" (change)="pupilChanged(2)">-->
-  <!--          <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>-->
-  <!--        </select>-->
-  <!--        <button class="btn btn-danger" [hidden]="!secondFrameCheckers" (click)="incorrect(2)">-->
-  <!--          <mat-icon class="fas fa-user">clear</mat-icon>-->
-  <!--        </button>-->
-  <!--        <button class="btn btn-success" [hidden]="!secondFrameCheckers" (click)="correct(2)" style="margin-top: 10px">-->
-  <!--          <mat-icon class="fas fa-user">done</mat-icon>-->
-  <!--        </button>-->
-  <!--      </div>-->
-  <!--      <div class="text" [style.font-size]="fontSize + 'rem'">-->
-  <!--        <span>{{secondFrameNum}}</span>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--    <div [hidden]="isPupil" class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'"-->
-  <!--         *ngIf="countOfPupils > 2">-->
-  <!--      <div class="buttons">-->
-  <!--        <select class="row form-select form-select-sm" aria-label=".form-select-sm example"-->
-  <!--                [(ngModel)]="thirdFramePupil" (change)="pupilChanged(3)">-->
-  <!--          <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>-->
-  <!--        </select>-->
-  <!--        <button class="btn btn-danger" [hidden]="!thirdFrameCheckers" (click)="incorrect(3)">-->
-  <!--          <mat-icon class="fas fa-user">clear</mat-icon>-->
-  <!--        </button>-->
-  <!--        <button class="btn btn-success" [hidden]="!thirdFrameCheckers" (click)="correct(3)" style="margin-top: 10px">-->
-  <!--          <mat-icon class="fas fa-user">done</mat-icon>-->
-  <!--        </button>-->
-  <!--      </div>-->
-  <!--      <div class="text" [style.font-size]="fontSize + 'rem'">-->
-  <!--        <span>{{thirdFrameNum}}</span>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--    <div [hidden]="isPupil" class="container1" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'"-->
-  <!--         *ngIf="countOfPupils > 3">-->
-  <!--      <div class="buttons">-->
-  <!--        <select class="row form-select form-select-sm" aria-label=".form-select-sm example"-->
-  <!--                [(ngModel)]="fourthFramePupil" (change)="pupilChanged(4)">-->
-  <!--          <option *ngFor="let pupil of pupils" [ngValue]="pupil">{{pupil.firstname}} {{pupil.lastname}}</option>-->
-  <!--        </select>-->
-  <!--        <button class="btn btn-danger" [hidden]="!fourthFrameCheckers" (click)="incorrect(4)">-->
-  <!--          <mat-icon class="fas fa-user">clear</mat-icon>-->
-  <!--        </button>-->
-  <!--        <button class="btn btn-success" [hidden]="!fourthFrameCheckers" (click)="correct(4)" style="margin-top: 10px">-->
-  <!--          <mat-icon class="fas fa-user">done</mat-icon>-->
-  <!--        </button>-->
-  <!--      </div>-->
-  <!--      <div class="text" [style.font-size]="fontSize + 'rem'">-->
-  <!--        <span>{{fourthFrameNum}}</span>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
+    </div>
+  </mat-drawer-container>
 </div>

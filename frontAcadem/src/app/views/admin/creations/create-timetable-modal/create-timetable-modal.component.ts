@@ -4,6 +4,7 @@ import {Group} from "../../../../models/Group";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Timetable} from "../../../../models/Timetable";
+import {TranslationPipe} from "../../../../service/ translations/translation.pipe";
 
 @Component({
   selector: 'app-create-timetable-modal',
@@ -11,16 +12,24 @@ import {Timetable} from "../../../../models/Timetable";
   styleUrls: ['./create-timetable-modal.component.css']
 })
 export class CreateTimetableModalComponent {
+  lang!:string;
   public timetableForm: FormGroup;
   group!: Group;
   constructor(private groupService: GroupService,
               public dialogRef: MatDialogRef<CreateTimetableModalComponent>,
+              public translationPipe: TranslationPipe,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private fb: FormBuilder) {
-    this.group = data;
+    this.group = data.group;
+    this.lang = data.lang;
     this.timetableForm = this.createTimetableForm();
   }
-
+  translate(key: string, lang: string): string {
+    return this.translationPipe.transform(key, lang);
+  }
+  onLanguageChanged(lang: string) {
+    this.lang = lang;
+  }
   createTimetableForm():FormGroup{
     return this.fb.group({
       mondayHH:['',Validators.compose([Validators.max(23),Validators.min(0),Validators.maxLength(2)],)],

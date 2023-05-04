@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuardService} from "./helper/auth-guard.service";
 import {LoginComponent} from "./auth/login/login.component";
-import {TeacherGuardService} from "./helper/teacher-guard.service";
 import {TrenLayoutComponent} from "./views/common/trenajer/tren-layout/tren-layout.component";
 import {ErrorPageComponent} from "./views/error-page/error-page.component";
 import {MainComponent} from "./views/main/main.component";

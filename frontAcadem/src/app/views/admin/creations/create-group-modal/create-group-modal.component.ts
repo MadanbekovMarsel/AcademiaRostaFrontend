@@ -36,6 +36,7 @@ export class CreateGroupModalComponent implements OnInit{
     },error => {
       console.log(error);
     });
+    this.dialogRef.close();
   }
 
   ngOnInit(): void {

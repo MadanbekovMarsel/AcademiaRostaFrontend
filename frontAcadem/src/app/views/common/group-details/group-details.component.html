@@ -1,23 +1,23 @@
 <div *ngIf="isLoaded" style="padding: 20px">
   <header style="margin-top: 90px">
     <h1>{{group.name}}</h1>
-    <p>Описание группы</p>
-    <p>Subject: {{group.subject.name}} </p>
-    <p>Teacher: {{group.teacher?.firstname}}</p>
-    <p>Pupils: {{count}} </p>
-    <button [hidden]="role!=='ROLE_ADMIN'" class="add-student-button" (click)="setTeacher()">Change Teacher</button>
+    <p>{{'DESCRIPTION'|translationPipe:lang}}</p>
+    <p>{{'SUBJECT'|translationPipe:lang}}: {{group.subject.name}} </p>
+    <p>{{'TEACHER'|translationPipe:lang}}: {{group.teacher?.firstname}}</p>
+    <p>{{'PUPILS'|translationPipe:lang}}: {{count}} </p>
+    <button [hidden]="role!=='ROLE_ADMIN'" class="add-student-button" (click)="setTeacher()">{{'CHANGE_TEACHER'|translationPipe:lang}}</button>
   </header>
 
   <section class="students">
-<!--    <h2>Список учеников</h2>-->
+    <h2>{{'PUPILS_LIST'|translationPipe:lang}}</h2>
     <table class="fl-table">
       <thead>
       <tr>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Возраст</th>
-        <th>Телефон</th>
-        <th [hidden]="role!=='ROLE_ADMIN'">Delete</th>
+        <th>{{'FIRSTNAME'|translationPipe:lang}}</th>
+        <th>{{'LASTNAME'|translationPipe:lang}}</th>
+        <th>{{'AGE'|translationPipe:lang}}</th>
+        <th>{{'PHONE_NUMBER'|translationPipe:lang}}</th>
+        <th [hidden]="role!=='ROLE_ADMIN'">{{'DELETE'|translationPipe:lang}}</th>
       </tr>
       </thead>
       <tbody>
@@ -27,7 +27,7 @@
         <td>{{pupil.age}}</td>
         <td>{{pupil.phoneNumber}}</td>
         <td [hidden]="role!=='ROLE_ADMIN'">
-          <button class="delete-btn" (click)="removePupil(pupil)">Удалить</button>
+          <button class="delete-btn" (click)="removePupil(pupil)">{{'DELETE'|translationPipe:lang}}</button>
         </td>
       </tr>
       </tbody>
@@ -36,21 +36,21 @@
     <mat-expansion-panel [hidden]="role!=='ROLE_ADMIN'" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-description>
-          Click to add a new pupil
+          {{'CLICK_TO_ADD_PUPIL'|translationPipe:lang}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div style="display: flex;align-items: center;">
-        <div>
-          <mat-form-field>
-            <mat-label>Выберте ученика</mat-label>
+      <div style="display: flex;justify-content: space-between; align-items: center;">
+        <div style="width: 60%;display: flex;align-items: center;">
+          <mat-form-field style="width: 100%;display: flex;align-items: center;">
+            <mat-label>{{'SELECT_PUPIL'|translationPipe:lang}}</mat-label>
             <mat-select [(ngModel)]="selectedPupil">
               <mat-option *ngFor="let pupil of allpupils"
                           [value]="pupil">{{pupil.firstname}} {{pupil.lastname}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <div>
-          <button class="add-student-button" (click)="handleAddStudent()">Добавить ученика</button>
+        <div style="display: flex;align-items: center;">
+          <button class="add-student-button" (click)="handleAddStudent()">{{'ADD'|translationPipe:lang}}</button>
         </div>
       </div>
     </mat-expansion-panel>
@@ -58,51 +58,51 @@
 
   <section class="schedule">
     <div class="container">
-      <h2>Расписание занятий</h2>
-      <button [hidden]="role!=='ROLE_ADMIN'" class="button" (click)="timetableCreate()">create timetable</button>
+      <h2>{{'TIMETABLE'|translationPipe:lang}}</h2>
+      <button [hidden]="role!=='ROLE_ADMIN'" class="button" (click)="timetableCreate()">{{'CREATE_TIMETABLE'|translationPipe:lang}}</button>
     </div>
-    <h3 [hidden]="haveTimetable">Not found</h3>
+    <h3 [hidden]="haveTimetable">{{'NOT_FOUND'|translationPipe:lang}}</h3>
     <table [hidden]="!haveTimetable">
       <thead>
       <tr>
-        <th>День недели</th>
-        <th>Время</th>
-        <th>Преподаватель</th>
+        <th>{{'DAY'|translationPipe:lang}}</th>
+        <th>{{'TIME'|translationPipe:lang}}</th>
+        <th>{{'TEACHER'|translationPipe:lang}}</th>
       </tr>
       </thead>
       <tbody>
       <tr [hidden]="!timetab.monday">
-        <td>Monday</td>
+        <td>{{'MONDAY'|translationPipe:lang}}</td>
         <td>{{timetab.monday}}</td>
         <td>Иванова А.Н.</td>
       </tr>
       <tr [hidden]="!timetab.tuesday">
-        <td>Tuesday</td>
+        <td>{{'TUESDAY'|translationPipe:lang}}</td>
         <td>{{timetab.tuesday}}</td>
         <td>Петрова О.В.</td>
       </tr>
       <tr [hidden]="!timetab.wednesday">
-        <td>Wednesday</td>
+        <td>{{'WEDNESDAY'|translationPipe:lang}}</td>
         <td>{{timetab.wednesday}}</td>
         <td>Петрова О.В.</td>
       </tr>
       <tr [hidden]="!timetab.thursday">
-        <td>Thursday</td>
+        <td>{{'THURSDAY'|translationPipe:lang}}</td>
         <td>{{timetab.thursday}}</td>
         <td>Петрова О.В.</td>
       </tr>
       <tr [hidden]="!timetab.friday">
-        <td>Friday</td>
+        <td>{{'FRIDAY'|translationPipe:lang}}</td>
         <td>{{timetab.friday}}</td>
         <td>Петрова О.В.</td>
       </tr>
       <tr [hidden]="!timetab.saturday">
-        <td>Saturday</td>
+        <td>{{'SATURDAY'|translationPipe:lang}}</td>
         <td>{{timetab.saturday}}</td>
         <td>Петрова О.В.</td>
       </tr>
       <tr [hidden]="!timetab.sunday">
-        <td>Sunday</td>
+        <td>{{'SUNDAY'|translationPipe:lang}}</td>
         <td>{{timetab.sunday}}</td>
         <td>Петрова О.В.</td>
       </tr>
