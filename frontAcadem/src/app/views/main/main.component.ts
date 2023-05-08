@@ -92,4 +92,8 @@ export class MainComponent implements OnInit{
   profile() {
 
   }
+
+  subjects() {
+    this.selectedComponent = 'subjects';
+  }
 }

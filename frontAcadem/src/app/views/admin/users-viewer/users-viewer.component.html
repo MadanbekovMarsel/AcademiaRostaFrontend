@@ -1,23 +1,23 @@
 <div class="student-list">
   <div class="container">
-    <h2>Список студентов</h2>
+    <h2>{{heading | translationPipe:lang}}</h2>
     <form class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Assignee</mat-label>
+        <mat-label>{{'SEARCH'|translationPipe:lang}}</mat-label>
         <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         </mat-autocomplete>
       </mat-form-field>
     </form>
-    <button class="button" (click)="createUser()">create user</button>
+    <button class="button" (click)="createUser()">{{'CREATE_USER'|translationPipe:lang}}</button>
   </div>
   <table>
     <thead>
     <tr>
-      <th>Имя</th>
-      <th>Фамилия</th>
-      <th>Возраст</th>
-      <th>Phone number</th>
+      <th>{{'FIRSTNAME'|translationPipe:lang}}</th>
+      <th>{{'LASTNAME'|translationPipe:lang}}</th>
+      <th>{{'AGE'|translationPipe:lang}}</th>
+      <th>{{'PHONE_NUMBER'|translationPipe:lang}}</th>
     </tr>
     </thead>
     <tbody>

@@ -14,7 +14,7 @@ export class SubjectService {
   }
 
 
-  createSubject(subject: Subject): Observable<any> {
+  createSubject(subject: { cost: string | null | undefined; name: string | null | undefined }): Observable<any> {
     return this.http.post(SUBJECT_API + "create", subject);
   }
 
@@ -24,5 +24,9 @@ export class SubjectService {
 
   updateSubject(id: number, subject: Subject): Observable<any> {
     return this.http.patch(SUBJECT_API + ":" + id + "/update", subject);
+  }
+
+  deleteSubject(subject:Subject):Observable<any>{
+    return this.http.delete(SUBJECT_API + subject.name)
   }
 }

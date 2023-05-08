@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {User} from "../../../../models/User";
 import {Subject} from "../../../../models/Subject";
 import {UserService} from "../../../../service/user.service";
@@ -19,12 +19,16 @@ export class CreateGroupModalComponent implements OnInit{
   name!: string;
   selectedTeacher!: User;
   selectedSubject!: Subject;
+  @Input() lang!: string;
 
   constructor(private http: HttpClient,
               private dialogRef: MatDialogRef<CreateGroupModalComponent>,
               private userService:UserService,
+              @Inject(MAT_DIALOG_DATA) public data: string,
               private subjectService: SubjectService,
-              private groupService: GroupService) { }
+              private groupService: GroupService) {
+    this.lang = data;
+  }
 
   onSubmit() {
     this.groupService.createGroup({

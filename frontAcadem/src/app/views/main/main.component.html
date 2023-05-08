@@ -57,6 +57,16 @@
           </div>
         </div>
       </a>
+      <a href="javascript:void(0)" class="menu-container" (click)="subjects()">
+        <div class="side_content">
+          <div>
+            <mat-icon class="example-icon">book</mat-icon>
+          </div>
+          <div class="side_label">
+            {{'SUBJECTS'|translationPipe:language}}
+          </div>
+        </div>
+      </a>
       <a href="javascript:void(0)" class="menu-container" (click)="trenajer()">
         <div class="side_content">
           <div>
@@ -80,6 +90,7 @@
                        (selectedGroup)="handleGroupEvent($event)"></app-userdetails>
       <app-users-viewer *ngIf="selectedComponent == 'users'" [lang]="language" [role]="userViewerRole"
                         (uploadUser)="handleTeacherEvent($event)"></app-users-viewer>
+      <app-subjects-viewer *ngIf="selectedComponent == 'subjects'" [lang]="language"></app-subjects-viewer>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

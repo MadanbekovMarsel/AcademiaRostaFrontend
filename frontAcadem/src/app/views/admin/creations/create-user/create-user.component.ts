@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../../../service/auth.service";
 import {NotificationsService} from "../../../../service/notifications.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-create-user',
@@ -32,12 +32,17 @@ export class CreateUserComponent {
     phoneNumber:['',Validators.compose([])]
   });
   selectedRole: number = 1;
+  @Input() lang!: string;
 
   constructor(private _formBuilder: FormBuilder,
               private authService: AuthService,
               private dialogRef: MatDialogRef<CreateUserComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: string,
               private notificationService: NotificationsService) {
+    this.lang = data;
   }
+
+
 
   submit() {
     let currentRole;

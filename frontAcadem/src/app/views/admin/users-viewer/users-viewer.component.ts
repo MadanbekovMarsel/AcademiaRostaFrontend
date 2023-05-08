@@ -1,4 +1,13 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {User} from "../../../models/User";
 import {UserService} from "../../../service/user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -11,25 +20,33 @@ import {map, Observable, startWith} from "rxjs";
   templateUrl: './users-viewer.component.html',
   styleUrls: ['./users-viewer.component.css']
 })
-export class UsersViewerComponent implements OnChanges, OnInit{
+export class UsersViewerComponent implements OnChanges, OnInit {
   @Input() role!: number;
+  @Input() lang!: string;
   @Output() uploadUser = new EventEmitter<any>;
+  heading!: string;
   public users!: User[];
   myControl = new FormControl<string | User>('');
   filteredOptions!: Observable<User[]>;
 
 
   constructor(private userService: UserService,
-              private dialog: MatDialog,) {}
+              private cdr: ChangeDetectorRef,
+              private dialog: MatDialog,) {
+  }
+
   ngOnInit(): void {
     this.refreshData();
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.refreshData();
   }
+
   displayFn(user: User): string {
     return user && user.firstname ? user.firstname : '';
   }
+
   refreshData(): void {
     if (this.role !== null) {
       if (this.role == 1) {
@@ -42,6 +59,7 @@ export class UsersViewerComponent implements OnChanges, OnInit{
               return name ? this._filter(name as string) : this.users.slice();
             })
           );
+          this.heading = 'LIST_TEACHERS';
         });
       } else {
         this.userService.getAllPupils().subscribe((data) => {
@@ -53,10 +71,13 @@ export class UsersViewerComponent implements OnChanges, OnInit{
               return name ? this._filter(name as string) : this.users.slice();
             })
           );
+          this.heading = 'LIST_PUPILS';
         });
       }
     }
+    this.cdr.detectChanges()
   }
+
   private _filter(name: string): User[] {
     const filterValue = name.toLowerCase();
 
@@ -67,9 +88,10 @@ export class UsersViewerComponent implements OnChanges, OnInit{
   }
 
 
-
-  createUser(){
-    const dialogRef = this.dialog.open(CreateUserComponent);
+  createUser() {
+    const dialogRef = this.dialog.open(CreateUserComponent,{
+      data:this.lang
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog was closed:', result);
       this.refreshData();

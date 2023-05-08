@@ -34,6 +34,9 @@ import {OlimpComponent} from './views/common/trenajer/olimp/olimp.component';
 import {MatSortModule} from "@angular/material/sort";
 import {OldViewComponent} from "./view/old-view/old-view.component";
 import {TranslationPipe} from './service/ translations/translation.pipe';
+import { SubjectsViewerComponent } from './views/common/subjects-viewer/subjects-viewer.component';
+import { SubjectCreateComponent } from './views/admin/creations/subject-create/subject-create.component';
+
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import {TranslationPipe} from './service/ translations/translation.pipe';
     UsersViewerComponent,
     OlimpComponent,
     TranslationPipe,
+    SubjectsViewerComponent,
+    SubjectCreateComponent,
   ],
     imports: [
         BrowserModule,

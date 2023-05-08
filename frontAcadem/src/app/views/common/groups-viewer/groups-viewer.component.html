@@ -13,7 +13,7 @@
     <button class="button" (click)="openGroupCreateModal()">{{'CREATE_GROUP'|translationPipe:lang}}</button>
   </div>
   <div class="row back">
-    <div class="card card-{{i+1}}" *ngFor="let group of filteredOptions | async; let i = index">
+    <div class="card card-{{(i+1)%5+1}}" *ngFor="let group of filteredOptions | async; let i = index">
       <div style="display: flex;align-items: center; justify-content: space-between; height: 60px">
         <div style="display: flex;justify-content: center;align-items: center;" (click)="sendGroupUp(group)">
           <div class="card__icon"><i class="fas fa-bolt">

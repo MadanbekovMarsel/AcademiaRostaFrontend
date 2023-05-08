@@ -44,7 +44,9 @@ export class GroupsViewerComponent implements OnInit, OnChanges{
   }
 
   openGroupCreateModal() {
-    const dialogRef = this.dialog.open(CreateGroupModalComponent);
+    const dialogRef = this.dialog.open(CreateGroupModalComponent,{
+      data:this.lang
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog was closed:', result);
       this.refreshData();

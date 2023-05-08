@@ -1,85 +1,85 @@
-<mat-stepper #stepper >
+<mat-stepper #stepper>
   <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
+      <ng-template matStepLabel>{{'FILL_ALL_FIELDS'|translationPipe:lang}}</ng-template>
       <div style="display: flex">
         <div style="display: flex; flex-direction: column;width: 50%;padding: 30px">
           <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="First name" formControlName="firstname" required>
+            <mat-label>{{'FIRSTNAME'|translationPipe:lang}}</mat-label>
+            <input matInput formControlName="firstname" required>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Lastname</mat-label>
-            <input matInput placeholder="Last name" formControlName="lastname" required>
+            <mat-label>{{'LASTNAME'|translationPipe:lang}}</mat-label>
+            <input matInput formControlName="lastname" required>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Fathers name</mat-label>
-            <input matInput placeholder="Fathers name" formControlName="fathersName" required>
+            <mat-label>{{'FATHERS_NAME'|translationPipe:lang}}</mat-label>
+            <input matInput formControlName="fathersName" required>
           </mat-form-field>
         </div>
         <div style="display: flex; flex-direction: column; width: 50%;padding: 30px">
           <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput placeholder="username" formControlName="username" required>
+            <mat-label>{{'USERNAME'|translationPipe:lang}}</mat-label>
+            <input matInput formControlName="username" required>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="password" formControlName="password" type="password" required>
+            <mat-label>{{'PASSWORD'|translationPipe:lang}}</mat-label>
+            <input matInput formControlName="password" type="password" required>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Confirm password</mat-label>
-            <input matInput placeholder="confirm password" formControlName="confirmPassword" type="password" required>
+            <mat-label>{{'CONFIRM_PASSWORD'|translationPipe:lang}}</mat-label>
+            <input matInput formControlName="confirmPassword" type="password" required>
           </mat-form-field>
         </div>
       </div>
       <div style="display: flex; justify-content: center; align-items: center;">
-        <mat-radio-group [(ngModel)]="selectedRole" [ngModelOptions]="{standalone: true}" color="primary" aria-label="Select an option">
-          <mat-radio-button style="padding: 20px" [value]="1">Учитель</mat-radio-button>
-          <mat-radio-button style="padding: 20px" [value]="2">Администратор</mat-radio-button>
-          <mat-radio-button style="padding: 20px" [value]="3">Ученик</mat-radio-button>
+        <mat-radio-group [(ngModel)]="selectedRole" [ngModelOptions]="{standalone: true}" color="primary"
+                         aria-label="Select an option">
+          <mat-radio-button style="padding: 20px" [value]="1">{{'TEACHER'|translationPipe:lang}}</mat-radio-button>
+          <mat-radio-button style="padding: 20px" [value]="2">{{'ADMIN'|translationPipe:lang}}</mat-radio-button>
+          <mat-radio-button style="padding: 20px" [value]="3">{{'PUPIL'|translationPipe:lang}}</mat-radio-button>
         </mat-radio-group>
       </div>
       <div>
-        <p>Go to a different step to see the error state</p>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext>{{'NEXT'|translationPipe:lang}}</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" errorMessage="Fill required fields.">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out your additional info</ng-template>
+      <ng-template matStepLabel>{{'OPTIONAL_FIELDS'|translationPipe:lang}}</ng-template>
       <div style="display: flex; flex-direction: column;width: 50%;padding: 30px">
         <mat-form-field appearance="fill">
-          <mat-label>Age</mat-label>
-          <input matInput placeholder="age" formControlName="age" type="number" required>
+          <mat-label>{{'AGE'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="age" type="number" required>
         </mat-form-field>
         <mat-form-field>
           <mat-label>email</mat-label>
-          <input matInput placeholder="madanbekovmarsel@gmail.com" formControlName="email">
+          <input matInput formControlName="email">
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput placeholder="Tynalieva 2/4" formControlName="address">
+          <mat-label>{{'ADDRESS'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="address">
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input matInput placeholder="+996 709 33 49 79" formControlName="phoneNumber">
+          <mat-label>{{'PHONE_NUMBER'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="phoneNumber">
         </mat-form-field>
       </div>
       <div>
-        <p>Go to a different step to see the error state</p>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>{{"BACK"|translationPipe:lang}}</button>
+        <button mat-button matStepperNext>{{'NEXT' | translationPipe:lang}}</button>
       </div>
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
+    <ng-template matStepLabel>{{'DONE'|translationPipe:lang}}</ng-template>
     <p>You are now done.</p>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button [disabled]="firstFormGroup.invalid || secondFormGroup.invalid" (click)="submit()">Submit
+      <button mat-button matStepperPrevious>{{'BACK'|translationPipe:lang}}</button>
+      <button mat-button (click)="stepper.reset()">{{'RESET'|translationPipe:lang}}</button>
+      <button mat-button [disabled]="firstFormGroup.invalid || secondFormGroup.invalid" (click)="submit()">{{'SAVE'
+        | translationPipe:lang}}
       </button>
     </div>
   </mat-step>
