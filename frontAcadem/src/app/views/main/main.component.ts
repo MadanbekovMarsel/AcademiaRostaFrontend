@@ -90,7 +90,10 @@ export class MainComponent implements OnInit{
   }
 
   profile() {
-
+    this.userService.getCurrentUser().subscribe(data =>{
+      this.uploadUser = data;
+      this.selectedComponent = "userDetails";
+    })
   }
 
   subjects() {

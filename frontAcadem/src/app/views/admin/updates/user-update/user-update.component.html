@@ -1,0 +1,37 @@
+<div style="padding: 20px">
+  <form [formGroup]="firstFormGroup">
+    <div style="display: flex">
+      <div style="display: flex; flex-direction: column;width: 50%;padding: 30px">
+        <mat-form-field appearance="fill">
+          <mat-label>{{'FIRSTNAME'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="firstname">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'LASTNAME'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="lastname">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'FATHERS_NAME'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="fathersName">
+        </mat-form-field>
+      </div>
+      <div style="display: flex; flex-direction: column; width: 50%;padding: 30px">
+        <mat-form-field>
+          <mat-label>{{'PHONE_NUMBER'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="phoneNumber">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'ADDRESS'|translationPipe:lang}}</mat-label>
+          <input matInput formControlName="address">
+        </mat-form-field>
+      </div>
+    </div>
+    <div style="display:flex;justify-content: center;align-items: center">
+      <button mat-flat-button color="primary" [disabled]="firstFormGroup.invalid" (click)="save()">{{'SAVE'|translationPipe:lang}}</button>
+    </div>
+  </form>
+</div>

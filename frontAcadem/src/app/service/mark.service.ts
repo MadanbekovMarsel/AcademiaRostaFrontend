@@ -15,7 +15,10 @@ export class MarkService {
     return this.http.patch(TRENAJER_API + username + '/setMark',mark);
   }
 
-  getMark(username: string):Observable<any>{
+  getMarksByDays(username: string):Observable<any>{
     return this.http.get(TRENAJER_API + username);
+  }
+  getMarksByTopics(username: string):Observable<any>{
+    return this.http.get(TRENAJER_API + username + "/byTopics");
   }
 }

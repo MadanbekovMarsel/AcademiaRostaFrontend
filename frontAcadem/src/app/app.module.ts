@@ -36,6 +36,9 @@ import {OldViewComponent} from "./view/old-view/old-view.component";
 import {TranslationPipe} from './service/ translations/translation.pipe';
 import { SubjectsViewerComponent } from './views/common/subjects-viewer/subjects-viewer.component';
 import { SubjectCreateComponent } from './views/admin/creations/subject-create/subject-create.component';
+import { StatPerDayComponent } from './views/common/statistics/stat-per-day/stat-per-day.component';
+import { StatPerTopicComponent } from './views/common/statistics/stat-per-topic/stat-per-topic.component';
+import { UserUpdateComponent } from './views/admin/updates/user-update/user-update.component';
 
 
 @NgModule({
@@ -59,6 +62,9 @@ import { SubjectCreateComponent } from './views/admin/creations/subject-create/s
     TranslationPipe,
     SubjectsViewerComponent,
     SubjectCreateComponent,
+    StatPerDayComponent,
+    StatPerTopicComponent,
+    UserUpdateComponent,
   ],
     imports: [
         BrowserModule,

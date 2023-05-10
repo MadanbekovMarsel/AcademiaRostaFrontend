@@ -1,28 +1,104 @@
-<div style="margin-top: 100px">
+<div class="container" style="margin-top: 90px">
+  <div class="main-body">
 
-  <div class="container mt-4">
-    <h2>{{ user.firstname }} {{ user.lastname }}</h2>
-    <hr>
-    <div><p>Возраст: {{user.age}}</p></div>
-    <div><p>Имя пользователя: {{user.username}}</p></div>
-    <div><p>Адресс: {{user.address}}</p></div>
-    <div *ngIf="user.phoneNumber">
-      <p >Телефон: {{ user.phoneNumber }}</p>
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="mt-3">
+                <h2>{{user.firstname}} {{user.lastname}}</h2>
+                <p class="text-secondary mb-1">{{user.role|translationPipe:lang}}</p>
+                <button class="btn btn-outline-primary"
+                        (click)="deleteUser()">{{"DELETE" | translationPipe:lang}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div style="display: flex;justify-content: center;">
+            <h2>{{"GROUPS" | translationPipe:lang}}</h2>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <h5 class="mb-0">{{"NAMING" | translationPipe:lang}}</h5>
+              <span class="text-secondary">{{"SUBJECT" | translationPipe:lang}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                *ngFor="let group of groups" (click)="sendGroupUp(group)">
+              <h4 class="mb-0">{{ group.name }}</h4>
+              <span class="text-secondary">{{group.subject.name}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h4 class="mb-0">{{"FULL_NAME"|translationPipe:lang}}</h4>
+              </div>
+              <div class="col-sm-9 text-secondary">{{user.firstname}} {{user.lastname}}</div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h4 class="mb-0">Email</h4>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user.email}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h4 class="mb-0">{{"PHONE_NUMBER"|translationPipe:lang}}</h4>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user.phoneNumber}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h4 class="mb-0">{{"ADDRESS"|translationPipe:lang}}</h4>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user.address}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-12">
+                <a class="btn btn-info " target="__blank"
+                   (click)="edit()">{{"EDIT"|translationPipe:lang}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gutters-sm" [hidden]="user.role !== 'ROLE_PUPIL'">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="stat-header">
+                {{"STAT_PER_DAY"|translationPipe:lang}}
+              </div>
+              <app-stat-per-day [pupil]="user"></app-stat-per-day>
+            </div>
+          </div>
+        </div>
+        <div class="row gutters-sm" [hidden]="user.role !== 'ROLE_PUPIL'">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="stat-header">
+                {{"STAT_PER_TOPIC"|translationPipe:lang}}
+              </div>
+              <app-stat-per-topic [user]="user"></app-stat-per-topic>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <h3>Группы:</h3>
-    <table *ngIf="isLoad" class="table table-striped">
-      <thead>
-      <tr>
-        <th>Название группы</th>
-        <th>Предмет</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let group of groups" (click)="sendGroupUp(group)">
-        <td>{{ group.name }}</td>
-        <td>{{group.subject.name}}</td>
-      </tr>
-      </tbody>
-    </table>
   </div>
 </div>
